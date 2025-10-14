@@ -1,0 +1,41 @@
+Progress update / quick verification
+
+I ran the script from the workspace to smoke-test. Initially it failed due to null characters; I removed those and re-ran.
+The latest run failed because pandas is not installed in the environment I ran it in (the code now shows a helpful dialog and exits when pandas is missing).
+The code is syntactically correct now and should run on your machine if pandas (and openpyxl for Excel reading) are installed.
+How to run and test locally (Windows PowerShell)
+
+Install dependencies (if not already installed):
+Run the app:
+What to try in the app
+
+Main window:
+Click "Add New Plan" and select an exported Planner Excel file. (You have an example Excel in the repo; choose that.)
+If you already have an open plan, you'll be asked whether to merge into an existing window or open a new window.
+In a PlannerViewer window:
+Use the Filter box to type any text. By default the box searches all columns.
+Click a column header to toggle "active column" mode; typing in the Filter box then searches only that column.
+Click the same column header again to clear the active column filter.
+Click "Add Task": a modal opens with one input per column. Fill fields and press "Add" to append a new row to that plan (it refreshes current filter and selects the new row).
+The Status bar shows how many rows are being shown and whether a column filter is active.
+Merge behavior:
+When merging two plans that have different columns, the merged viewer keeps existing columns first and appends any new columns. Missing cells are filled with empty strings.
+Implementation notes / edge cases handled
+
+Missing pandas: application now displays a friendly dialog with the install command and exits. Use the command above to install.
+Large Excel files: the app loads the entire sheet into a pandas DataFrame; for very large exports this may be slow and use memory. If you expect huge files we can add a progress spinner, lazy loading, or column selection before import.
+Merging columns: the implementation unions columns. If both files have the same logical columns but slightly different names (typos), they will be kept as separate columns; we can add column-mapping UI later.
+Header visuals: Tkinter's Treeview lacks per-heading color configuration consistently across platforms, so the code uses a simple "[filter]" marker in the header text to indicate the active column. We can implement a richer visual (icons, small image overlays) if desired.
+If you want any of the following next:
+
+Save / export current viewer DataFrame back to Excel (I can add a per-viewer "Export to Excel" button).
+Column-specific filter UI (dropdown with unique values for the selected column).
+Sorting by column (click header to sort; or add sort buttons).
+Persist viewer state (save opened plans/merged state between runs).
+Replace the header "[filter]" marker with an icon (requires shipping small image files or generating icons at runtime).
+If you'd like, I can:
+
+Add the "Export to Excel" button now (simple with pandas' DataFrame.to_excel).
+Add column-sorting on header clicks (toggle asc/desc).
+Improve filter UI to show a clear "Active column: <col>" area and a clear filter button.
+Which improvement would you like next, or do you want me to add an "Export to Excel" button in the viewer?
