@@ -38,4 +38,3 @@ If you'd like, I can:
 Add the "Export to Excel" button now (simple with pandas' DataFrame.to_excel).
 Add column-sorting on header clicks (toggle asc/desc).
 Improve filter UI to show a clear "Active column: <col>" area and a clear filter button.
-Which improvement would you like next, or do you want me to add an "Export to Excel" button in the viewer?
